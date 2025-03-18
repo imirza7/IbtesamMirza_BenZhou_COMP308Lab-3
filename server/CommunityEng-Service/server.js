@@ -9,6 +9,7 @@ const resolvers = require("./graphql/resolvers");
 const startServer = async () => {
     try {
         // Connect to MongoDB
+        //testing
         await configureMongoose();
 
         // Initialize Apollo GraphQL server
