@@ -1,20 +1,27 @@
-require('dotenv').config(); // Load environment variables
-const { ApolloServer } = require('@apollo/server');
-const { startStandaloneServer } = require('@apollo/server/standalone');
-const configureMongoose = require('./config/mongoose');
-const typeDefs = require('./graphql/typeDefs');
-const resolvers = require('./graphql/resolvers');
+require("dotenv").config();
+const express = require("express");
+const { ApolloServer } = require("apollo-server-express");
+const cors = require("cors");
+const typeDefs = require("./graphql/typeDefs");
+const resolvers = require("./graphql/resolvers");
 
-const startServer = async () => {
-    await configureMongoose();
-    const server = new ApolloServer({
-        typeDefs,
-        resolvers,
-    });
-    const { url } = await startStandaloneServer(server, {
-        listen: { port: 4001 },
-    });
-    console.log(`🚀 GraphQL server ready at ${url}`);
-};
-// Start the server
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+});
+
+async function startServer() {
+  await server.start();
+  server.applyMiddleware({ app });
+
+  const PORT = process.env.PORT || 4003;
+  app.listen(PORT, () => {
+    console.log(`✅ Server running at http://localhost:${PORT}${server.graphqlPath}`);
+  });
+}
+
 startServer();
