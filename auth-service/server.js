@@ -27,7 +27,7 @@ const app = express();
 
 // Enable CORS with the appropriate origins (adjust based on your client-side URLs)
 app.use(cors({
-    origin: ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002', 'http://localhost:4000', 'https://studio.apollographql.com'],
+    origin: ['http://localhost:5173','http://localhost:5174', 'http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002', 'http://localhost:4000', 'https://studio.apollographql.com'],
     credentials: true, // Allow cookies to be sent with requests
 }));
 
